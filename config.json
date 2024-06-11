@@ -1,0 +1,20 @@
+{
+  "debug": true,
+  "server": {
+    "address": ":9090"
+  },
+  "context":{
+    "timeout":2
+  },
+  "database": {
+      "host": "mysql",
+      "port": "3306",
+      "user": "user",
+      "pass": "password",
+      "name": "catalog"
+  },
+  "jwt":{
+    "key":"V3ryS3cur3!*Jwt"
+  }
+
+}
