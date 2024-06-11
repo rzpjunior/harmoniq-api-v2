@@ -1,4 +1,4 @@
-# Superindo API Assessment
+# Harmoniq API v2
 
 ## Requirment tools
     Docker versi 24.0.6 [https://docs.docker.com/desktop/install/windows-install/]
@@ -10,7 +10,7 @@
     install docker dan docker-compose
     Install postman
     Install git
-    clone repo [https://github.com/dirgadm/superindo_api.git]
+    clone repo [https://github.com/rzpjunior/harmoniq-api-v2]
 
 ## Serve
     ```
@@ -21,4 +21,4 @@
     ```
 
 ## Endpoint Testing 
-    - available in `./doc/Superindo.postman_collection.json` and ready to import to postman
+    - available in `./doc/Harmoniq.postman_collection.json` and ready to import to postman
