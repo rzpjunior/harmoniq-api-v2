@@ -8,19 +8,7 @@ import (
 	"time"
 
 	"harmoniq/harmoniq-api-v2/pkg/ehttp"
-	_cartHandler "harmoniq/harmoniq-api-v2/service/cart/delivery/http"
-	_cartRepo "harmoniq/harmoniq-api-v2/service/cart/repository/mysql"
-	_cartUseCase "harmoniq/harmoniq-api-v2/service/cart/usecase"
-	_categoryHandler "harmoniq/harmoniq-api-v2/service/category/delivery/http"
-	_categoryRepo "harmoniq/harmoniq-api-v2/service/category/repository/mysql"
-	_categoryUseCase "harmoniq/harmoniq-api-v2/service/category/usecase"
-	_productHandler "harmoniq/harmoniq-api-v2/service/product/delivery/http"
-	_productRepo "harmoniq/harmoniq-api-v2/service/product/repository/mysql"
-	_productUseCase "harmoniq/harmoniq-api-v2/service/product/usecase"
-	_productImageRepo "harmoniq/harmoniq-api-v2/service/product_image/repository/mysql"
-	_userHandler "harmoniq/harmoniq-api-v2/service/user/delivery/http"
-	_userRepo "harmoniq/harmoniq-api-v2/service/user/repository/mysql"
-	_userUseCase "harmoniq/harmoniq-api-v2/service/user/usecase"
+	"harmoniq/harmoniq-api-v2/setup"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
@@ -31,9 +19,12 @@ import (
 )
 
 func init() {
+	loadConfig()
+}
+
+func loadConfig() {
 	viper.SetConfigFile(`config.json`)
-	err := viper.ReadInConfig()
-	if err != nil {
+	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
 
@@ -43,6 +34,30 @@ func init() {
 }
 
 func main() {
+	db := setupDatabase()
+	defer closeDatabaseConnection(db)
+
+	e := setupServer()
+
+	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
+
+	repos := setup.NewRepositories(db)
+	useCases := setup.NewUseCases(repos, time.Duration(timeoutContext)*time.Second)
+	setup.SetupHandlers(e, useCases)
+
+	log.Fatal(e.Start(viper.GetString("server.address")))
+}
+
+func setupDatabase() *gorm.DB {
+	connectionString := buildConnectionString()
+	db, err := gorm.Open(mysql.Open(connectionString), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+	return db
+}
+
+func buildConnectionString() string {
 	dbHost := viper.GetString(`database.host`)
 	dbPort := viper.GetString(`database.port`)
 	dbUser := viper.GetString(`database.user`)
@@ -52,40 +67,30 @@ func main() {
 	val := url.Values{}
 	val.Add("parseTime", "1")
 	val.Add("loc", "Asia/Jakarta")
-	dsn := fmt.Sprintf("%s?%s", connection, val.Encode())
-	gormDB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	return fmt.Sprintf("%s?%s", connection, val.Encode())
+}
+
+func closeDatabaseConnection(db *gorm.DB) {
+	sqlDB, err := db.DB()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to get sqlDB from gorm DB:", err)
 	}
+	if err := sqlDB.Close(); err != nil {
+		log.Fatal("Failed to close database connection:", err)
+	}
+}
 
-	sqlDB, err := gormDB.DB()
-	defer func() {
-		err := sqlDB.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	// setup machine and middleware
+func setupServer() *echo.Echo {
 	e := echo.New()
-	// setup cors
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 		AllowCredentials: true,
 		AllowHeaders:     []string{"Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Access-Control-Request-Headers, Access-Control-Request-Method, Connection, Host, Origin, User-Agent, Referer, Cache-Control, X-header"},
 	}))
-
-	// setup echo for request id
 	e.Use(middleware.RequestID())
-
-	// setup echo for secure
 	e.Use(middleware.Secure())
-
-	// setup echo for gzip compres
 	e.Use(middleware.Gzip())
-
-	// setup custom context
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			cc := &ehttp.Context{
@@ -96,29 +101,5 @@ func main() {
 			return next(cc)
 		}
 	})
-
-	// setup timeout
-	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
-
-	// setup repo
-	productRepo := _productRepo.NewMysqlProductRepository(gormDB)
-	userRepo := _userRepo.NewMysqlUserRepository(gormDB)
-	categoryRepo := _categoryRepo.NewMysqlCategoryRepository(gormDB)
-	productImageRepo := _productImageRepo.NewMysqlProductImageRepository(gormDB)
-	cartRepo := _cartRepo.NewMysqlCartRepository(gormDB)
-
-	// setup usecase
-	productUsecase := _productUseCase.NewProductUsecase(productRepo, categoryRepo, productImageRepo, timeoutContext)
-	userUsecase := _userUseCase.NewUserUsecase(userRepo, timeoutContext)
-	categoryUsecase := _categoryUseCase.NewCategoryUsecase(categoryRepo, timeoutContext)
-	cartUsecase := _cartUseCase.NewCartUsecase(cartRepo, productRepo, categoryRepo, productImageRepo, timeoutContext)
-
-	// setup handler
-	_productHandler.NewProductHandler(e, productUsecase)
-	_userHandler.NewUserHandler(e, userUsecase)
-	_categoryHandler.NewCategoryHandler(e, categoryUsecase)
-	_categoryHandler.NewCategoryHandler(e, categoryUsecase)
-	_cartHandler.NewCartHandler(e, cartUsecase)
-
-	log.Fatal(e.Start(viper.GetString("server.address")))
+	return e
 }
