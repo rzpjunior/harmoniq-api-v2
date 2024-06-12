@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
+	"harmoniq/harmoniq-api-v2/domain"
+	"harmoniq/harmoniq-api-v2/domain/dto"
 	"harmoniq/harmoniq-api-v2/pkg/ehttp"
 	"harmoniq/harmoniq-api-v2/pkg/jwt"
-	"harmoniq/harmoniq-api-v2/service/domain"
-	"harmoniq/harmoniq-api-v2/service/domain/dto"
 
 	"github.com/labstack/gommon/log"
 	"github.com/spf13/viper"

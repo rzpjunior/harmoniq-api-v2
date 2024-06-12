@@ -1,9 +1,9 @@
 package http
 
 import (
+	"harmoniq/harmoniq-api-v2/domain"
+	"harmoniq/harmoniq-api-v2/domain/dto"
 	"harmoniq/harmoniq-api-v2/pkg/ehttp"
-	"harmoniq/harmoniq-api-v2/service/domain"
-	"harmoniq/harmoniq-api-v2/service/domain/dto"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo"

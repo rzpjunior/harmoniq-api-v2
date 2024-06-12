@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"harmoniq/harmoniq-api-v2/service/domain"
-	"harmoniq/harmoniq-api-v2/service/domain/dto"
+	"harmoniq/harmoniq-api-v2/domain"
+	"harmoniq/harmoniq-api-v2/domain/dto"
 
 	"github.com/labstack/gommon/log"
 )
