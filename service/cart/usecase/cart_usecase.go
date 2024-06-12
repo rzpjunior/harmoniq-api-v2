@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"project-version3/superindo-task/pkg/constants"
-	"project-version3/superindo-task/pkg/ehttp"
-	"project-version3/superindo-task/service/domain"
-	"project-version3/superindo-task/service/domain/dto"
+	"harmoniq/harmoniq-api-v2/pkg/constants"
+	"harmoniq/harmoniq-api-v2/pkg/ehttp"
+	"harmoniq/harmoniq-api-v2/service/domain"
+	"harmoniq/harmoniq-api-v2/service/domain/dto"
 
 	"github.com/labstack/gommon/log"
 )

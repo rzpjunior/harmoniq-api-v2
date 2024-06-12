@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `catalog` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `catalog`;
+CREATE DATABASE  IF NOT EXISTS `harmoniq-dev` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `harmoniq-dev`;
 -- MySQL dump 
 --
--- Host: localhost    Database: catalog
+-- Host: localhost    Database: harmoniq-dev
 -- ------------------------------------------------------
 -- Server version	5.7.18
 

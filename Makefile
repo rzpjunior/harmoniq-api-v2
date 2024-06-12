@@ -2,7 +2,7 @@
 MYSQL_USER ?= user
 MYSQL_PASSWORD ?= password
 MYSQL_ADDRESS ?= 127.0.0.1:3306
-MYSQL_DATABASE ?= catalog
+MYSQL_DATABASE ?= harmoniq-dev
 
 # ~~~ Development Environment ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

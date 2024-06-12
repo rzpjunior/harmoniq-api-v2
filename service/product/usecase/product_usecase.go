@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"project-version3/superindo-task/service/domain"
-	"project-version3/superindo-task/service/domain/dto"
+	"harmoniq/harmoniq-api-v2/service/domain"
+	"harmoniq/harmoniq-api-v2/service/domain/dto"
 
 	"github.com/labstack/gommon/log"
 )
