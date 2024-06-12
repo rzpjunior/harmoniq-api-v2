@@ -10,7 +10,7 @@
     install docker dan docker-compose
     Install postman
     Install git
-    clone repo [https://github.com/rzpjunior/harmoniq-api-v2]
+    clone repo [https://harmoniq-api-v2]
 
 ## Serve
     ```
