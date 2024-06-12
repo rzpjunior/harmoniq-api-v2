@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"context"
-	"harmoniq/harmoniq-api-v2/service/domain"
+	"harmoniq/harmoniq-api-v2/domain"
 
 	"gorm.io/gorm"
 )

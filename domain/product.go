@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"harmoniq/harmoniq-api-v2/service/domain/dto"
+	"harmoniq/harmoniq-api-v2/domain/dto"
 	"time"
 )
 
