@@ -2,8 +2,8 @@ version: "3.7"
 services:
   web:
     build : .
-    image : rzpjunior/harmoniq-api-v2:latest
-    container_name: harmoniq-api-v2
+    image : rzpjunior/harmoniq-api:latest
+    container_name: harmoniq_task_api
     ports:
       - 9090:9090
     depends_on:
@@ -17,7 +17,7 @@ services:
     container_name: harmoniq_task_sql
     command: mysqld --user=root
     volumes:
-      - ./harmoniq-dev.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./harmoniq.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 3306:3306
     environment:

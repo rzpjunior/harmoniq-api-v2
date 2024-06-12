@@ -1,6 +1,6 @@
 module harmoniq/harmoniq-api-v2
 
-go 1.19
+go 1.22.4
 
 require (
 	github.com/go-playground/validator/v10 v10.21.0
