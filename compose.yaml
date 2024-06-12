@@ -2,8 +2,8 @@ version: "3.7"
 services:
   web:
     build : .
-    image : dirgadm/superindo-api:latest
-    container_name: superindo_task_api
+    image : rzpjunior/harmoniq-api:latest
+    container_name: harmoniq_task_api
     ports:
       - 9090:9090
     depends_on:
@@ -14,14 +14,14 @@ services:
 
   mysql:
     image: mysql:5.7
-    container_name: superindo_task_sql
+    container_name: harmoniq_task_sql
     command: mysqld --user=root
     volumes:
-      - ./catalog.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./harmoniq.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 3306:3306
     environment:
-      - MYSQL_DATABASE=catalog
+      - MYSQL_DATABASE=harmoniq-dev
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=root

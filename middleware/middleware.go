@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"context"
+	"harmoniq/harmoniq-api-v2/pkg/constants"
+	"harmoniq/harmoniq-api-v2/pkg/ehttp"
+	jwtx "harmoniq/harmoniq-api-v2/pkg/jwt"
 	"net/http"
-	"project-version3/superindo-task/pkg/constants"
-	"project-version3/superindo-task/pkg/ehttp"
-	jwtx "project-version3/superindo-task/pkg/jwt"
 	"regexp"
 	"strings"
 	"time"

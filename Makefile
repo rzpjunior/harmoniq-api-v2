@@ -2,7 +2,7 @@
 MYSQL_USER ?= user
 MYSQL_PASSWORD ?= password
 MYSQL_ADDRESS ?= 127.0.0.1:3306
-MYSQL_DATABASE ?= catalog
+MYSQL_DATABASE ?= harmoniq-dev
 
 # ~~~ Development Environment ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -24,7 +24,7 @@ docker-teardown:
 	@ docker-compose down --remove-orphans -v
 
 docker-log:
-	@ docker logs -f superindo_task_api
+	@ docker logs -f harmoniq_task_api
 
 # ~~~ Cleans ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

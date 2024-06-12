@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"project-version3/superindo-task/service/domain/dto"
+	"harmoniq/harmoniq-api-v2/service/domain/dto"
 	"time"
 )
 

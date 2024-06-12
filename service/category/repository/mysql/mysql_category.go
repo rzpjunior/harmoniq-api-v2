@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"context"
-	"project-version3/superindo-task/service/domain"
+	"harmoniq/harmoniq-api-v2/service/domain"
 
 	"gorm.io/gorm"
 )
