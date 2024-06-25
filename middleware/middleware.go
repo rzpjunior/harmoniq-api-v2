@@ -56,7 +56,7 @@ func (m *Middleware) Authorized() echo.MiddlewareFunc {
 				ctx.JSON(http.StatusUnauthorized, ehttp.FormatResponse{
 					Code:    http.StatusUnauthorized,
 					Status:  "failure",
-					Message: "Your token is expired",
+					Message: "Your session is expired, please log in again.",
 				})
 				return echo.ErrUnauthorized
 			}

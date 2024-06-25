@@ -19,7 +19,7 @@ services:
     volumes:
       - ./harmoniq.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 3306:3306
+      - 3307:3306
     environment:
       - MYSQL_DATABASE=harmoniq-dev
       - MYSQL_USER=user
