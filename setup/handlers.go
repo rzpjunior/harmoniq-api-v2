@@ -1,6 +1,8 @@
 package setup
 
 import (
+	albumHandler "harmoniq/harmoniq-api-v2/service/album/delivery/http"
+	artistHandler "harmoniq/harmoniq-api-v2/service/artist/delivery/http"
 	cartHandler "harmoniq/harmoniq-api-v2/service/cart/delivery/http"
 	categoryHandler "harmoniq/harmoniq-api-v2/service/category/delivery/http"
 	productHandler "harmoniq/harmoniq-api-v2/service/product/delivery/http"
@@ -14,4 +16,6 @@ func SetupHandlers(e *echo.Echo, useCases *UseCases) {
 	userHandler.NewUserHandler(e, useCases.UserUsecase)
 	categoryHandler.NewCategoryHandler(e, useCases.CategoryUsecase)
 	cartHandler.NewCartHandler(e, useCases.CartUsecase)
+	albumHandler.NewAlbumHandler(e, useCases.AlbumUsecase)
+	artistHandler.NewArtistHandler(e, useCases.ArtistUsecase)
 }

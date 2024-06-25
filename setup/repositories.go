@@ -1,6 +1,8 @@
 package setup
 
 import (
+	albumRepo "harmoniq/harmoniq-api-v2/service/album/repository/mysql"
+	artistRepo "harmoniq/harmoniq-api-v2/service/artist/repository/mysql"
 	cartRepo "harmoniq/harmoniq-api-v2/service/cart/repository/mysql"
 	categoryRepo "harmoniq/harmoniq-api-v2/service/category/repository/mysql"
 	productRepo "harmoniq/harmoniq-api-v2/service/product/repository/mysql"
@@ -18,6 +20,8 @@ type Repositories struct {
 	CategoryRepo     domain.CategoryRepository
 	ProductImageRepo domain.ProductImageRepository
 	CartRepo         domain.CartRepository
+	AlbumRepo        domain.AlbumRepository
+	ArtistRepo       domain.ArtistRepository
 }
 
 func NewRepositories(db *gorm.DB) *Repositories {
@@ -27,5 +31,7 @@ func NewRepositories(db *gorm.DB) *Repositories {
 		CategoryRepo:     categoryRepo.NewMysqlCategoryRepository(db),
 		ProductImageRepo: productImageRepo.NewMysqlProductImageRepository(db),
 		CartRepo:         cartRepo.NewMysqlCartRepository(db),
+		AlbumRepo:        albumRepo.NewMysqlAlbumRepository(db),
+		ArtistRepo:       artistRepo.NewMysqlArtistRepository(db),
 	}
 }
