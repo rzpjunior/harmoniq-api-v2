@@ -1,11 +1,11 @@
 -- Create the database
-CREATE DATABASE IF NOT EXISTS harmoniq-dev;
+CREATE DATABASE IF NOT EXISTS "harmoniq-dev";
 
 -- Use the database
-USE harmoniq-dev;
+USE "harmoniq-dev";
 
 -- Create artists table
-CREATE TABLE artists (
+CREATE TABLE IF NOT EXISTS artists (
     artist_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     genre VARCHAR(100),
@@ -13,10 +13,10 @@ CREATE TABLE artists (
     bio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create albums table
-CREATE TABLE albums (
+CREATE TABLE IF NOT EXISTS albums (
     album_id INT AUTO_INCREMENT PRIMARY KEY,
     artist_id INT,
     title VARCHAR(255) NOT NULL,
@@ -26,10 +26,10 @@ CREATE TABLE albums (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create songs table
-CREATE TABLE songs (
+CREATE TABLE IF NOT EXISTS songs (
     song_id INT AUTO_INCREMENT PRIMARY KEY,
     album_id INT NULL,
     title VARCHAR(255) NOT NULL,
@@ -40,20 +40,20 @@ CREATE TABLE songs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (album_id) REFERENCES albums(album_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create artist_song relationship table
-CREATE TABLE artist_song (
+CREATE TABLE IF NOT EXISTS artist_song (
     artist_id INT,
     song_id INT,
     PRIMARY KEY (artist_id, song_id),
     FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
     FOREIGN KEY (song_id) REFERENCES songs(song_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create user table
-CREATE TABLE user (
-    id BIGINT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS user (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) DEFAULT '',
     phone VARCHAR(15) DEFAULT '',
     password VARCHAR(250) DEFAULT '',
@@ -62,38 +62,38 @@ CREATE TABLE user (
     last_login_at DATETIME NULL DEFAULT NULL,
     created_at DATETIME DEFAULT NULL,
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create favorites table
-CREATE TABLE favorites (
-    user_id BIGINT(11) UNSIGNED,
+CREATE TABLE IF NOT EXISTS favorites (
+    user_id BIGINT UNSIGNED,
     song_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, song_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (song_id) REFERENCES songs(song_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create playlists table
-CREATE TABLE playlists (
+CREATE TABLE IF NOT EXISTS playlists (
     playlist_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT(11) UNSIGNED,
+    user_id BIGINT UNSIGNED,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user(id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create playlist_songs relationship table
-CREATE TABLE playlist_songs (
+CREATE TABLE IF NOT EXISTS playlist_songs (
     playlist_id INT,
     song_id INT,
     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (playlist_id, song_id),
     FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
     FOREIGN KEY (song_id) REFERENCES songs(song_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insert artists
 INSERT INTO artists (name, genre, country, bio) VALUES 
@@ -130,10 +130,10 @@ INSERT INTO artist_song (artist_id, song_id) VALUES
 (2, 8);
 
 -- Insert users
-INSERT INTO `user`(`email`,`phone`,`password`,`name`,`status`,`created_at`)
-VALUES('ardi@example.com','+6281122334444','$2a$14$taBX9l6UqoiQBT2oi0AM3eqDYO2CFBqIYPQY1AomrT0MQzkbt7Rmy','ardi',1,NOW()),
-('atun@example.com','+6281122334444','$2a$14$taBX9l6UqoiQBT2oi0AM3eqDYO2CFBqIYPQY1AomrT0MQzkbt7Rmy','atun wati',1,NOW()),
-('joy@example.com','+6281122334444','$2a$14$taBX9l6UqoiQBT2oi0AM3eqDYO2CFBqIYPQY1AomrT0MQzkbt7Rmy','joy boy',1,NOW());
+INSERT INTO user (email, phone, password, name, status, last_login_at, created_at) VALUES 
+('user1@example.com', '1234567890', 'hashed_password1', 'User One', 1, '2024-01-01 12:00:00', '2024-01-01 12:00:00'),
+('user2@example.com', '0987654321', 'hashed_password2', 'User Two', 1, '2024-01-02 12:00:00', '2024-01-02 12:00:00'),
+('user3@example.com', '1122334455', 'hashed_password3', 'User Three', 1, '2024-01-03 12:00:00', '2024-01-03 12:00:00');
 
 -- Insert favorites (including singles)
 INSERT INTO favorites (user_id, song_id) VALUES 

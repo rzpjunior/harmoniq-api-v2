@@ -19,7 +19,7 @@ func (m *mysqlAlbumRepository) GetList(ctx context.Context, offset int, limit in
 	gorm := m.Conn.Model(domain.Album{})
 
 	if search != "" {
-		gorm = gorm.Where("name like ?", "%"+search+"%")
+		gorm = gorm.Where("title like ?", "%"+search+"%")
 	}
 	if artistId != 0 {
 		gorm = gorm.Where("artist_id = ?", artistId)
@@ -36,6 +36,6 @@ func (m *mysqlAlbumRepository) GetList(ctx context.Context, offset int, limit in
 }
 
 func (m *mysqlAlbumRepository) GetDetail(ctx context.Context, id int) (album domain.Album, err error) {
-	err = m.Conn.Where("id = ?", id).First(&album).Error
+	err = m.Conn.Where("album_id = ?", id).First(&album).Error
 	return
 }

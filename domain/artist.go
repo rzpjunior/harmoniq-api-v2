@@ -3,16 +3,21 @@ package domain
 import (
 	"context"
 	"harmoniq/harmoniq-api-v2/domain/dto"
+	"time"
 )
 
 type Artist struct {
-	Id int `gorm:"primaryKey;autoIncrement:true"`
-	// RecordLabelId int
-	Name string
+	ArtistId  int `gorm:"primaryKey;autoIncrement:true"`
+	Name      string
+	Genre     string
+	Country   string
+	Bio       string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 func (m *Artist) TableName() string {
-	return "artist"
+	return "artists"
 }
 
 type ArtistUsecase interface {
