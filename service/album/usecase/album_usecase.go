@@ -40,13 +40,20 @@ func (s *albumUsecase) GetList(ctx context.Context, offset int, limit int, searc
 		}
 
 		res = append(res, dto.AlbumResponse{
-			Id:   album.Id,
-			Name: album.Name,
-			Year: album.Year,
+			AlbumId:       album.AlbumId,
+			Title:         album.Title,
+			Genre:         album.Genre,
+			ReleaseDate:   album.ReleaseDate,
+			CoverImageUrl: album.CoverImageUrl,
 			Artist: dto.ArtistResponse{
-				Id:   artist.Id,
-				Name: artist.Name,
+				ArtistId: artist.ArtistId,
+				Name:     artist.Name,
+				Bio:      artist.Bio,
+				Country:  artist.Country,
+				Genre:    artist.Genre,
 			},
+			CreatedAt: album.CreatedAt,
+			UpdatedAt: album.UpdatedAt,
 		})
 	}
 
@@ -69,13 +76,20 @@ func (s *albumUsecase) GetDetail(ctx context.Context, id int) (res dto.AlbumResp
 	}
 
 	res = dto.AlbumResponse{
-		Id:   album.Id,
-		Name: album.Name,
-		Year: album.Year,
+		AlbumId:       album.AlbumId,
+		Title:         album.Title,
+		Genre:         album.Genre,
+		ReleaseDate:   album.ReleaseDate,
+		CoverImageUrl: album.CoverImageUrl,
 		Artist: dto.ArtistResponse{
-			Id:   artist.Id,
-			Name: artist.Name,
+			ArtistId: artist.ArtistId,
+			Name:     artist.Name,
+			Bio:      artist.Bio,
+			Country:  artist.Country,
+			Genre:    artist.Genre,
 		},
+		CreatedAt: album.CreatedAt,
+		UpdatedAt: album.UpdatedAt,
 	}
 
 	return

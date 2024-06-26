@@ -16,7 +16,8 @@ type artistUsecase struct {
 
 func NewArtistUsecase(u domain.ArtistRepository, timeout time.Duration) domain.ArtistUsecase {
 	return &artistUsecase{
-		artistRepo: u,
+		artistRepo:     u,
+		contextTimeout: timeout,
 	}
 }
 
@@ -30,8 +31,13 @@ func (s *artistUsecase) GetList(ctx context.Context, offset int, limit int, sear
 
 	for _, artist := range artists {
 		res = append(res, dto.ArtistResponse{
-			Id:   artist.Id,
-			Name: artist.Name,
+			ArtistId:  artist.ArtistId,
+			Name:      artist.Name,
+			Bio:       artist.Bio,
+			Country:   artist.Country,
+			Genre:     artist.Genre,
+			CreatedAt: artist.CreatedAt,
+			UpdatedAt: artist.UpdatedAt,
 		})
 	}
 
@@ -47,8 +53,13 @@ func (s *artistUsecase) GetDetail(ctx context.Context, id int) (res dto.ArtistRe
 	}
 
 	res = dto.ArtistResponse{
-		Id:   artist.Id,
-		Name: artist.Name,
+		ArtistId:  artist.ArtistId,
+		Name:      artist.Name,
+		Bio:       artist.Bio,
+		Country:   artist.Country,
+		Genre:     artist.Genre,
+		CreatedAt: artist.CreatedAt,
+		UpdatedAt: artist.UpdatedAt,
 	}
 
 	return
