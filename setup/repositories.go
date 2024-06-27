@@ -3,6 +3,7 @@ package setup
 import (
 	albumRepo "harmoniq/harmoniq-api-v2/service/album/repository/mysql"
 	artistRepo "harmoniq/harmoniq-api-v2/service/artist/repository/mysql"
+	songRepo "harmoniq/harmoniq-api-v2/service/song/repository/mysql"
 	userRepo "harmoniq/harmoniq-api-v2/service/user/repository/mysql"
 
 	"harmoniq/harmoniq-api-v2/domain"
@@ -14,6 +15,7 @@ type Repositories struct {
 	UserRepo   domain.UserRepository
 	AlbumRepo  domain.AlbumRepository
 	ArtistRepo domain.ArtistRepository
+	SongRepo   domain.SongRepository
 }
 
 func NewRepositories(db *gorm.DB) *Repositories {
@@ -21,5 +23,6 @@ func NewRepositories(db *gorm.DB) *Repositories {
 		UserRepo:   userRepo.NewMysqlUserRepository(db),
 		AlbumRepo:  albumRepo.NewMysqlAlbumRepository(db),
 		ArtistRepo: artistRepo.NewMysqlArtistRepository(db),
+		SongRepo:   songRepo.NewMysqlSongRepository(db),
 	}
 }
