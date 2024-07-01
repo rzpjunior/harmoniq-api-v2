@@ -1,5 +1,7 @@
 package domain
 
+import "context"
+
 type ArtistSong struct {
 	ArtistId int `gorm:"foreignKey:ArtistId"`
 	SongId   int `gorm:"foreignKey:SongId"`
@@ -14,7 +16,6 @@ func (m *ArtistSong) TableName() string {
 // 	GetDetail(ctx context.Context, id int) (res dto.SongResponse, err error)
 // }
 
-// type SongRepository interface {
-// 	GetList(ctx context.Context, offset int, limit int, search string, artistId int, albumId int) (songs []Song, count int64, err error)
-// 	GetDetail(ctx context.Context, id int) (song Song, err error)
-// }
+type ArtistSongRepository interface {
+	GetList(ctx context.Context, offset int, limit int, search string, artistId int, songId int) (songs []ArtistSong, count int64, err error)
+}

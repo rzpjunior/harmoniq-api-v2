@@ -23,6 +23,6 @@ func NewUseCases(repos *Repositories, timeout time.Duration) *UseCases {
 		UserUsecase:   userUseCase.NewUserUsecase(repos.UserRepo, timeout),
 		AlbumUsecase:  albumUseCase.NewAlbumUsecase(repos.AlbumRepo, repos.ArtistRepo, timeout),
 		ArtistUsecase: artistUsecase.NewArtistUsecase(repos.ArtistRepo, timeout),
-		SongUsecase:   songUseCase.NewSongUsecase(repos.SongRepo, repos.AlbumRepo, repos.ArtistRepo, timeout),
+		SongUsecase:   songUseCase.NewSongUsecase(repos.SongRepo, repos.AlbumRepo, repos.ArtistRepo, repos.ArtistSongRepo, timeout),
 	}
 }
